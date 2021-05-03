@@ -313,7 +313,7 @@ Resources:
       TargetGroupAttributes:
         # ロードバランサのコネクションドレイン
         - Key: "deregistration_delay.timeout_seconds"
-          Value: 4
+          Value: 5
 
 # ------------------------------------------------------------#
 #  Internet ALB
@@ -330,7 +330,8 @@ Resources:
         - Key: "deletion_protection.enabled"
           Value: false
         - Key: "idle_timeout.timeout_seconds"
-          Value: 60
+          # Health check interval must be greater than the timeout
+          Value: 5
       SecurityGroups:
         - !Ref InstanceSecurityGroup
       Subnets:
