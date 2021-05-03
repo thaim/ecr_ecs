@@ -313,7 +313,7 @@ Resources:
       TargetGroupAttributes:
         # ロードバランサのコネクションドレイン
         - Key: "deregistration_delay.timeout_seconds"
-          Value: 5
+          Value: 4
 
 # ------------------------------------------------------------#
 #  Internet ALB
