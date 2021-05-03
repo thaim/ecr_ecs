@@ -307,6 +307,13 @@ Resources:
       Protocol: HTTP
       Port: 80
       TargetType: ip
+      # ロードバランサのヘルスチェック
+      HealthCheckIntervalSeconds: 5
+      HealthyThresholdCount: 2
+      TargetGroupAttributes:
+        # ロードバランサのコネクションドレイン
+        - Key: "deregistration_delay.timeout_seconds"
+          Value: 5
 
 # ------------------------------------------------------------#
 #  Internet ALB
@@ -323,7 +330,8 @@ Resources:
         - Key: "deletion_protection.enabled"
           Value: false
         - Key: "idle_timeout.timeout_seconds"
-          Value: 60
+          # Health check interval must be greater than the timeout
+          Value: 5
       SecurityGroups:
         - !Ref InstanceSecurityGroup
       Subnets:
@@ -403,6 +411,8 @@ Resources:
             - HostPort: 80
               Protocol: tcp
               ContainerPort: 80
+              # SIGTERMシグナルへのアプリケーションの応答性
+          StopTimeout: 2
 
 # ------------------------------------------------------------#
 #  ECS Service
